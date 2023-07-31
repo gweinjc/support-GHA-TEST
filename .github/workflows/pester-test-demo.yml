@@ -7,8 +7,8 @@ jobs:
   invoke-pester-pwsh:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.plaform }}
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: $
     timeout-minutes: 90
     steps:
     - uses: actions/checkout@v2
