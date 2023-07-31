@@ -1,0 +1,54 @@
+name: Pester Test Demo
+run-name: ${{ github.actor }} is testing PowerShell with Pester!
+on:
+  push:
+    branches: [ SA-3457_GHA-TEST ]
+jobs:
+  invoke-pester-pwsh:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.plaform }}
+    timeout-minutes: 90
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Pester Tests (pwsh)
+      env:
+        XAPIKEY_PESTER_MTP: ${{ secrets.XAPIKEY_PESTER_MTP }}
+        XAPIKEY_PESTER_LINUX: ${{ secrets.XAPIKEY_PESTER_LINUX }}
+        XAPIKEY_PESTER_MAC: ${{ secrets.XAPIKEY_PESTER_MAC }}
+        XAPIKEY_PESTER:  ${{ secrets.XAPIKEY_PESTER }}
+        XORGID_PesterMSP: ${{ secrets.XORGID_PesterMSP }}
+      run: |
+        Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+        Set-PSRepository psgallery -InstallationPolicy trusted
+        Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
+        switch (${{ matrix.platform }}) {
+          ubuntu-latest {
+            . "./PowerShell/JumpCloud Module/Tests/InvokePester.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER_LINUX -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER_MTP -ExcludeTagList "ModuleValidation, JCDeployment, MSP" -IncludeTagList "*" -RequiredModulesRepo "PSGallery"
+            }
+          macos-latest {
+            . "./PowerShell/JumpCloud Module/Tests/InvokePester.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER_MAC -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER_MTP -ExcludeTagList "ModuleValidation, JCDeployment, MSP" -IncludeTagList "*" -RequiredModulesRepo "PSGallery"
+          }
+          windows-latest {
+            . "./PowerShell/JumpCloud Module/Tests/InvokePester.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER_MTP -ExcludeTagList "ModuleValidation, JCDeployment, MSP" -IncludeTagList "*" -RequiredModulesRepo "PSGallery"
+          }
+        }
+      shell: pwsh
+  invoke-pester-posh:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Pester Tests (PowerShell 5)
+      env:
+        XAPIKEY_PESTER_MTP: ${{ secrets.XAPIKEY_PESTER_MTP }}
+        XAPIKEY_PESTER_LINUX: ${{ secrets.XAPIKEY_PESTER_LINUX }}
+        XAPIKEY_PESTER_MAC: ${{ secrets.XAPIKEY_PESTER_MAC }}
+        XAPIKEY_PESTER:  ${{ secrets.XAPIKEY_PESTER }}
+        XORGID_PesterMSP: ${{ secrets.XORGID_PesterMSP }}
+      run: |
+        Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+        Set-PSRepository psgallery -InstallationPolicy trusted
+        Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
+        . "./PowerShell/JumpCloud Module/Tests/InvokePester.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER_MTP -ExcludeTagList "ModuleValidation, JCDeployment, MSP" -IncludeTagList "*" -RequiredModulesRepo "PSGallery"
+      shell: powershell
