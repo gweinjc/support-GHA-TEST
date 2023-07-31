@@ -24,7 +24,7 @@ jobs:
         Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
-        $matrixOS = ${{ matrix.os }}
+        $matrixOS = "${{ matrix.os }}"
         switch ($matrixOS) {
           ubuntu-latest {
             . "./PowerShell/JumpCloud Module/Tests/InvokePester.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER_LINUX -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER_MTP -ExcludeTagList "ModuleValidation, JCDeployment, MSP" -IncludeTagList "*" -RequiredModulesRepo "PSGallery"
