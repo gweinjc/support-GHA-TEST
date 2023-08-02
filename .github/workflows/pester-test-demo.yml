@@ -13,6 +13,7 @@ jobs:
       env:
         XAPIKEY_PESTER:  ${{ secrets.XAPIKEY_PESTER }}
       run: |
+        #TEST
         Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
