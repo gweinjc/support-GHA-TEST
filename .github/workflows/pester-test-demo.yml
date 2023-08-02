@@ -14,6 +14,7 @@ jobs:
         XAPIKEY_PESTER:  ${{ secrets.XAPIKEY_PESTER }}
       run: |
         #TEST
+        Write-Host $PSScriptRoot
         Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
@@ -21,7 +22,7 @@ jobs:
         . "./PowerShell/JumpCloud Module/Tests/DefineEnvironment.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER -RequiredModulesRepo "PSGallery"
         # Load private functions
         Write-Host ('[status]Load private functions: ' + "/../Private/*.ps1")
-        Get-ChildItem -Path:("./PowerShell/../Private/*.ps1") -Recurse | ForEach-Object { . $_.FullName }
+        Get-ChildItem -Path:("./PowerShell/JumpCloud Module/Private/*.ps1") -Recurse | ForEach-Object { . $_.FullName }
         # Load HelperFunctions
         Write-Host ('[status]Load HelperFunctions: ' + "/HelperFunctions.ps1")
         . ("./PowerShell/JumpCloud Module/Tests/HelperFunctions.ps1")
