@@ -18,6 +18,9 @@ jobs:
         Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
+        Install-Module -Name JumpCloud.SDK.V1 -Force
+        Install-Module -Name JumpCloud.SDK.V2 -Force
+        Install-Module -Name JumpCloud.SDK.DirectoryInsights -Force
         # Load DefineEnvironment
         . "./PowerShell/JumpCloud Module/Tests/DefineEnvironment.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER -RequiredModulesRepo "PSGallery"
         # Load private functions
@@ -46,6 +49,9 @@ jobs:
         Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
+        Install-Module -Name JumpCloud.SDK.V1 -Force
+        Install-Module -Name JumpCloud.SDK.V2 -Force
+        Install-Module -Name JumpCloud.SDK.DirectoryInsights -Force
         Import-Module "./PowerShell/JumpCloud Module/JumpCloud.psd1"
         $matrixOS = "${{ matrix.os }}"
         switch ($matrixOS) {
