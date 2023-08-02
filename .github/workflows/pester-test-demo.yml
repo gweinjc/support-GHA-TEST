@@ -56,13 +56,13 @@ jobs:
         $matrixOS = "${{ matrix.os }}"
         switch ($matrixOS) {
           ubuntu-latest {
-            Invoke-Pester -Path "/PowerShell/JumpCloud Module/Tests/Public/Users/Get-JCUser.tests.ps1"
+            Invoke-Pester -Path "./PowerShell/JumpCloud Module/Tests/Public/Users/Get-JCUser.tests.ps1"
           }
           macos-latest {
-            Invoke-Pester -Path "/PowerShell/JumpCloud Module/Tests/Public/Users/Get-JCUser.tests.ps1"
+            Invoke-Pester -Path "./PowerShell/JumpCloud Module/Tests/Public/Users/Get-JCUser.tests.ps1"
           }
           windows-latest {
-            Invoke-Pester -Path "/PowerShell/JumpCloud Module/Tests/Public/Users/Get-JCUser.tests.ps1"
+            Invoke-Pester -Path "./PowerShell/JumpCloud Module/Tests/Public/Users/Get-JCUser.tests.ps1"
           }
         }
       shell: pwsh
