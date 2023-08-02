@@ -20,12 +20,12 @@ jobs:
         # Load DefineEnvironment
         . "./PowerShell/JumpCloud Module/Tests/DefineEnvironment.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER -RequiredModulesRepo "PSGallery"
         # Load private functions
-        Write-Host ('[status]Load private functions: ' + "$PSScriptRoot/../Private/*.ps1")
-        Get-ChildItem -Path:("$PSScriptRoot/../Private/*.ps1") -Recurse | ForEach-Object { . $_.FullName }
+        Write-Host ('[status]Load private functions: ' + "/../Private/*.ps1")
+        Get-ChildItem -Path:("./PowerShell/../Private/*.ps1") -Recurse | ForEach-Object { . $_.FullName }
         # Load HelperFunctions
-        Write-Host ('[status]Load HelperFunctions: ' + "$PSScriptRoot/HelperFunctions.ps1")
-        . ("$PSScriptRoot/HelperFunctions.ps1")
-        Write-Host ('[status]Setting up org: ' + "$PSScriptRoot/SetupOrg.ps1")
+        Write-Host ('[status]Load HelperFunctions: ' + "/HelperFunctions.ps1")
+        . ("./PowerShell/JumpCloud Module/Tests/HelperFunctions.ps1")
+        Write-Host ('[status]Setting up org: ' + "/SetupOrg.ps1")
         . "./PowerShell/JumpCloud Module/Tests/SetupOrg.ps1" -JumpCloudApiKey $env:XAPIKEY_PESTER -JumpCloudApiKeyMsp $env:XAPIKEY_PESTER
       shell: pwsh
   Get-JCUsers-Test:
@@ -45,7 +45,7 @@ jobs:
         Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
-        Import-Module "$PSScriptRoot/../JumpCloud.psd1"
+        Import-Module "./PowerShell/JumpCloud Module/JumpCloud.psd1"
         $matrixOS = "${{ matrix.os }}"
         switch ($matrixOS) {
           ubuntu-latest {
