@@ -1,0 +1,20 @@
+name: Artifact between Workflows Test Demo
+run-name: ${{ github.actor }} is testing Artifacts!
+on:
+  push:
+    branches: [ SA-3457_GHA-TEST ]
+jobs:
+  build_artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Meow
+        shell: pwsh
+        run: |
+          Write-Host "meow"
+      - name: Archive artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-test
+          path: /home/runner/.local/share/powershell/Modules/meow.json
