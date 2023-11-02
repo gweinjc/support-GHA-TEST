@@ -12,7 +12,8 @@ jobs:
       - name: Meow
         shell: pwsh
         run: |
-          Write-Host "meow"
+          $cat = "Meow"
+          $cat | Out-File -Path /home/runner/.local/share/powershell/Modules/meow.json
       - name: Archive artifact
         uses: actions/upload-artifact@v3
         with:
