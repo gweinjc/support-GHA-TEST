@@ -18,6 +18,6 @@ jobs:
           RUN_ID=`gh run --repo ${{ github.repository }} list --workflow ${WF_NAME} --json databaseId --jq .[0].databaseId`
           gh run --repo ${{ github.repository }} download ${RUN_ID} -n ${ARTIFACT_NAME}
           # List the artifiact directory/files
-          ls -lR
+          ls -d meow.json
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
