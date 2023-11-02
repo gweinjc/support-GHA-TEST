@@ -1,0 +1,23 @@
+name: Download Artifact Test Demo
+run-name: ${{ github.actor }} is testing Artifact download!
+on:
+  workflow_run:
+    workflows: "Artifact between Workflows Test Demo"
+    types:
+        - completed
+jobs:
+  download_artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Download Artifact
+        run: |
+          WF_NAME="artifact-test-demo.yml"
+          ARTIFACT_NAME="artifact-test"
+          RUN_ID=`gh run --repo ${{ github.repository }} list --workflow ${WF_NAME} --json databaseId --jq .[0].databaseId`
+          gh run --repo ${{ github.repository }} download ${RUN_ID} -n ${ARTIFACT_NAME}
+          # List the artifiact directory/files
+          ls -lR
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
