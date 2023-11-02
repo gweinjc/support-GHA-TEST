@@ -1,4 +1,4 @@
-name: Artifact between Workflows Test Demo
+name: Create Artifact
 run-name: ${{ github.actor }} is testing Artifacts!
 on:
   push:

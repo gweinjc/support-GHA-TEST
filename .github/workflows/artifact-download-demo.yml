@@ -1,8 +1,8 @@
-name: Download Artifact Test Demo
+name: Download Artifact
 run-name: ${{ github.actor }} is testing Artifact download!
 on:
   workflow_run:
-    workflows: "Artifact between Workflows Test Demo"
+    workflows: ["Create Artifact"]
     types:
         - completed
 jobs:
